@@ -1,4 +1,4 @@
-import { UserModel } from "../models/userModel.js"
+import { UserModel } from "../models/user.js"
 import { Request, Response, NextFunction } from 'express'
 
 type Role = 'Admin' | 'moderator' | 'User';
