@@ -1,12 +1,13 @@
 import morgan from 'morgan';
 import chalk from 'chalk';
 import { format } from 'date-fns';
+import { TokenFunction, TokenObject } from '../types.js';
 
 const date = new Date();
 
-morgan.token('date', () => format(date, 'yyyy-MM-dd HH:mm:ss'));
+const morganDate: TokenFunction = (req, res) => format(date, 'yyyy-MM-dd HH:mm:ss');
 
-morgan.token('status', (req: any, res: { headersSent: any; header: any; statusCode: any; }) => {
+const morganStatus: TokenFunction = (req, res) => {
   // get the status code of response written
   const status = (typeof res.headersSent !== 'boolean' ? Boolean(res.header) : res.headersSent)
     ? res.statusCode
@@ -32,12 +33,12 @@ morgan.token('status', (req: any, res: { headersSent: any; header: any; statusCo
   const color = getColor();
 
   return `\x1b[${color}m${status}\x1b[0m`;
-});
+};
 
-const morganChalk = morgan((tokens: { [x: string]: (arg0: any, arg1: any) => any; date: (arg0: any, arg1: any) => unknown; method: (arg0: any, arg1: any) => unknown; status: (arg0: any, arg1: any) => unknown; url: (arg0: any, arg1: any) => unknown; }, req: any, res: any) => [
-  chalk.white(tokens.date(req, res)),
+const morganChalk = morgan((tokens: TokenObject, req, res) => [
+  chalk.white(morganDate(req, res)),
   chalk.green.bold(tokens.method(req, res)),
-  chalk.bold(tokens.status(req, res)),
+  chalk.bold(morganStatus(req, res)),
   chalk.white(tokens.url(req, res)),
   chalk.yellow(`${tokens['response-time'](req, res)} ms`),
 ].join(' '));
