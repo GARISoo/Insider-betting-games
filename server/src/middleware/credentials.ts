@@ -1,9 +1,7 @@
 import allowedOrigins from "../config/allowedOrigins.js"
-import {Request, Response, NextFunction} from 'express'
+import { MiddlewareHandler } from "../types.js"
 
-type CredentialsMiddleware = (req: Request, res: Response, next: NextFunction) => void
-
-const credentials: CredentialsMiddleware = (req, res, next) => {
+const credentials: MiddlewareHandler = (req, res, next) => {
   const origin = req.headers.origin
 
   if (allowedOrigins.includes(origin)) {

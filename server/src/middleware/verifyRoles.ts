@@ -1,12 +1,8 @@
 import { UserModel } from "../models/user.js"
-import { Request, Response, NextFunction } from 'express'
+import { MiddlewareHandler, Roles } from "../types.js"
 
-type Role = 'Admin' | 'moderator' | 'User';
-
-type RoleMiddleware = (req: Request, res: Response, next: NextFunction) => void
-
-const verifyRoles = (...allowedRoles: Role[] | number[]) => {
-  const verify: RoleMiddleware = (req, res, next) => {
+const verifyRoles = (...allowedRoles: Roles[] | number[]) => {
+  const verify: MiddlewareHandler = (req, res, next) => {
     const _id = req.user._id
     const roleArray = [...allowedRoles]
 

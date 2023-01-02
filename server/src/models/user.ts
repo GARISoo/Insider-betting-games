@@ -3,13 +3,17 @@ import mongoose from 'mongoose'
 const { Schema } = mongoose
 
 const userSchema = new Schema({
-  email: {
+  username: {
     type: String,
     required: true,
     unique: true,
+  },
+  name: {
+    type: String,
+    required: true,
     lowercase: true,
   },
-  fullName: {
+  surname: {
     type: String,
     required: true,
     lowercase: true,

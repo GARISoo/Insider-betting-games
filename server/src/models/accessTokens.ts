@@ -8,8 +8,14 @@ const tokenSchema = new Schema({
     ref: 'user',
     required: true,
   },
-  userAgent: { type: String, required: true },
-  token: { type: String, required: true },
-});
+  userAgent: {
+    type: String,
+    required: true
+  },
+  token: {
+    type: String,
+    required: true
+  },
+}, { timestamps: true });
 
 export const TokenModel = mongoose.model('accessTokens', tokenSchema, 'accessTokens');

@@ -1,32 +1,9 @@
-import jwt, { JsonWebTokenError, TokenExpiredError, NotBeforeError } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import { UserModel } from '../models/user.js'
 import AccessTokenService from '../services/AccessTokenService.js'
-import { Request, Response, NextFunction } from 'express'
-import { Types } from 'mongoose'
+import { MiddlewareHandler, JwtError, User } from "../types.js"
 
-type AuthMiddleware = (req: Request, res: Response, next: NextFunction) => void
-
-type JwtError = JsonWebTokenError | TokenExpiredError | NotBeforeError | null | string
-
-type User = {
-  _id: Types.ObjectId
-  roles?: {
-    Admin?: number
-    User?: number
-  }
-  token: string
-  email: string
-}
-
-declare global {
-  namespace Express {
-    interface Request {
-      user: User | undefined
-    }
-  }
-}
-
-const requireAuth: AuthMiddleware = async (req, res, next) => {
+const requireAuth: MiddlewareHandler = async (req, res, next) => {
   const { cookies, headers } = req
   const { accessCookie } = cookies
 
@@ -68,7 +45,9 @@ const requireAuth: AuthMiddleware = async (req, res, next) => {
       req.user = {
         _id,
         token: updatedToken,
-        email: user.email,
+        username: user.username,
+        name: user.name,
+        surname: user.surname,
       };
 
       next();
