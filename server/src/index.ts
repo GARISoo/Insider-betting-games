@@ -4,7 +4,6 @@ import morgan from './middleware/morgan.js';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import path from 'path';
 import corsOptions from './config/corsOptions.js';
 import credentials from './middleware/credentials.js';
 import routes from './routes/index.js';
