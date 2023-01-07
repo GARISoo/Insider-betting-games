@@ -1,9 +1,10 @@
 import jwt from 'jsonwebtoken'
 import { TokenModel } from '../models/accessTokens.js'
+import * as dotenv from 'dotenv';
 
-require('dotenv').config({
+dotenv.config({
   path: '../.env',
-})
+});
 
 const accessTokenSecret = process.env.SECRET
 
@@ -49,7 +50,7 @@ class AccessTokensService {
       updatedToken: dbToken.token,
     }
   }
-  
+
   static async deleteToken(token: string) {
     TokenModel.deleteOne({ token })
   }

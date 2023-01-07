@@ -3,12 +3,12 @@ import { Request, Response, NextFunction } from 'express'
 import { Types } from 'mongoose'
 
 export type User = {
-    _id: Types.ObjectId
+    _id?: Types.ObjectId
     roles?: {
         Admin?: number
         User?: number
     }
-    token: string
+    token?: string
     username: string
     name: string
     surname: string
@@ -30,6 +30,6 @@ export type RouterHandler = (req: Request, res: Response) => void;
 
 export type MiddlewareHandler = (req: Request, res: Response, next: NextFunction) => void;
 
-export type Roles = 'Admin' | 'User';
+export type Roles = { [key: string]: number | unknown };
 
 export type JwtError = JsonWebTokenError | TokenExpiredError | NotBeforeError | null | string;

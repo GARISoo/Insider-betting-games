@@ -23,16 +23,13 @@ const userSchema = new Schema({
     required: true,
   },
   roles: {
-    User: {
-      type: Number,
-      default: 1000,
-    },
+    User: Number,
     Admin: Number,
   },
   hasPaid: {
     type: Boolean,
     default: false,
   },
-}, { timestamps: true})
+}, { timestamps: true })
 
 export const UserModel = mongoose.model('user', userSchema, 'user');
